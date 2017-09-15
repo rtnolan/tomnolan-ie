@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, BooleanField, SelectField,\
-    SubmitField
+    SubmitField, SelectMultipleField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import Required, Length, Email, Regexp
 from wtforms import ValidationError
@@ -10,15 +10,18 @@ from app.extensions import db
 from flask import current_app
 
 
-#app = current_app
-
-#db.init_app(app)
-
-#def get_all_categories():      
-#    return db.session.query(Category).all()
-
 class PostForm(FlaskForm):
+	title = StringField("Title", validators=[Required()])
+	categories = SelectMultipleField("Categories:", choices="")
 	body = PageDownField("What's on your mind?", validators=[Required()])
-	#category = SelectField('Category', coerce=int)
+	#category = QuerySelectField(u'Category', query_factory=lambda: Category.query, get_label='name'
 	submit = SubmitField('Submit')
-	skill_level = QuerySelectField(u'Category', query_factory=lambda: Category.query, get_label='name')
+
+	def __init__(self, choices):
+		FlaskForm.__init__(self)
+		self.categories.choices = choices
+
+
+class AddCategoryForm(FlaskForm):
+	name = StringField("Category Name:", validators=[Required()])
+	submit = SubmitField("Add")

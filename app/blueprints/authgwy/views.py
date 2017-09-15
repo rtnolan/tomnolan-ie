@@ -4,7 +4,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from app.extensions import db
 from app.models import User
 from flask_mail import Mail, Message
-from .tasks import send_async_email
+from .tasks import send_email
 from . import authgwy
 
 #authgwy = Blueprint('authgwy', __name__, template_folder='templates')
@@ -34,7 +34,7 @@ def register():
 	if form.validate_on_submit():
 		user = User(email=form.email.data, username=form.username.data, password=form.password.data)
 		token = user.generate_confirmation_token()
-		send_async_email(user.email, 'Confirm Your Account',
+		send_email(user.email, 'Confirm Your Account',
                    'authgwy/email/confirm', user=user, token=token)
 		db.session.add(user)
 		db.session.commit()
@@ -83,7 +83,7 @@ def confirm(token):
 @login_required
 def resend_confirmation():
 	token = current_user.generate_confirmation_token()
-	send_async_email(current_user.email, 'Confirm Your Account',
+	send_email(current_user.email, 'Confirm Your Account',
                    'authgwy/email/confirm', user=current_user, token=token)
 	flash('A new confirmation email has been sent to you!')
 	return redirect(url_for('main.index'))

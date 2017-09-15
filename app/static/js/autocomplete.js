@@ -1,7 +1,14 @@
-$(function () {
-    $.post('/get-category').done(function (category) {
-        $("#category").autocomplete({
-            source: category['category']
+$(function() {
+    $('button').click(function() {
+        $.ajax({
+            url: '/add-category',
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
         });
-    })
+    });
 });

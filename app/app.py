@@ -7,7 +7,8 @@ from app.extensions import (
 	db,
 	login_manager,
 	mail,
-	celery,
+	pagedown,
+	#celery,
 	#debug_toolbar,
 )
 from config import config
@@ -39,7 +40,8 @@ def extensions(app):
 	db.init_app(app)
 	login_manager.init_app(app)
 	mail.init_app(app)
-	celery.conf.update(app.config)
+	pagedown.init_app(app)
+	#celery.conf.update(app.config)
 	#debug_toolbar.init_app(app)
 
 	return None

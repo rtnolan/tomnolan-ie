@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block page_content %}
+<diV>
+	{% if current_user.is_authenticated %}
+	{{ wtf.quick_form(form)}}
+	{% endif %}
+</diV>
+<br/>
+<a href="{{ url_for('main.add_category') }}" class="btn btn-success">
+	Add Category <span class="glyphicon glyphicon-plus"></span>
+</a>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {{ pagedown.include_pagedown() }}
+{% endblock %}

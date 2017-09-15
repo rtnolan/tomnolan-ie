@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% import "main/_macros.html" as macros %}
 {% block page_content %}
-<div class="page-header">
-    <h1>Hello, {% if current_user.is_authenticated %} {{ current_user.email }} {% else %} Stranger {% endif %}!</h1>
+
+{% include 'main/_posts.html' %}
+
+{% if posts %}
+<div class="pagination">
+    {{ macros.pagination_widget(pagination, '.index') }}
 </div>
-<diV>
-	{% if current_user.is_authenticated %}
-	{{ wtf.quick_form(form)}}
-	{% endif %}
-</diV>
+{% endif %}
+
 {% endblock %}
 
 {% block scripts %}
     {{ super() }}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="{{ url_for('static', filename='js/autocomplete.js') }}"></script>
 {% endblock %}
