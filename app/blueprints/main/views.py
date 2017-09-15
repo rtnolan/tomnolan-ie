@@ -5,7 +5,7 @@ from ...decorators import admin_required
 from .forms import PostForm, AddCategoryForm
 from app.models import Post, Category
 from app.extensions import db
-from sql_alchemy import get_debug_queries
+from flask_sqlalchemy import get_debug_queries
 
 @main.after_app_request
 def after_request(response):

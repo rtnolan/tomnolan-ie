@@ -13,7 +13,7 @@ if os.path.exists('.env'):
         if len(var) == 2:
             os.environ[var[0]] = var[1]
 
-app = create_app(os.getenv('FLASK_CONFIG'))
+app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)
 migrate = Migrate(app, db)
 
@@ -37,7 +37,7 @@ def profile(length=25, profile_dir=None):
 def deploy():
 	"""Run deployment tasks"""
 	from flask_migrate import upgrade
-	from app.models import Role, User, Post Category
+	from app.models import Role, User, Post, Category
 
 	#migrate to latest revision
 	upgrade()
