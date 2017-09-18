@@ -13,7 +13,7 @@ class Config:
     MAIL_USE_TLS = True
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    BLOG_PREFIX = 'BLOG'
+    BLOG_PREFIX = '[BLOG]'
     BLOG_ADMIN = os.environ.get('BLOG_ADMIN')
     CELERY_BROKER_URL = 'redis://localhost:6379/0'
     CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
@@ -50,7 +50,7 @@ class ProductionConfig(Config):
             mailhost=(cls.MAIL_SERVER, cls.MAIL_PORT),
             fromaddr=cls.MAIL_USERNAME,
             toaddrs=[cls.BLOG_ADMIN],
-            subject=cls.BLOG_PREFIX + ' Application Error',
+            subject='[' + cls.BLOG_PREFIX + ' Application Error]',
             credentials=credentials,
             secure=secure)
         mail_handler.setLevel(logging.ERROR)
