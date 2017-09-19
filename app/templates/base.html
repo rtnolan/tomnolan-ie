@@ -7,6 +7,7 @@
 
 <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 {% endblock %}
 
 {% block navbar %}
@@ -24,7 +25,7 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a class="scroll-link" href="#top-content" style="display: block; color: white; height: 100%; padding: 11px 15px; text-decoration: none;">/ About</a></li>
+                <li><a class="scroll-link" href="{{ url_for('main.about') }}" style="display: block; color: white; height: 100%; padding: 11px 15px; text-decoration: none;">/ About</a></li>
                 {% if current_user.is_authenticated %}
                 <li> <a class="scroll-link" href="{{ url_for('main.add_post') }}" style="display: block; color: white; height: 100%; padding: 11px 15px; text-decoration: none;">/ Add Post</a></li>
                 {% endif %}
@@ -45,8 +46,14 @@
     {% endfor %}
 
     {% block page_content %}{% endblock %}
+
+    <div id="footer">    
+    <p>&copy;<script type="text/javascript">document.write(new Date().getFullYear());</script> by Tom Nolan. All rights reserved. <a href="mailto:tomnolan95 _at_ gmail _dot_ com">Questions?</a></p>
+</div>
+
 </div>
 {% endblock %}
+
 
 {% block scripts %}
 {{ super() }}

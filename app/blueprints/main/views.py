@@ -24,6 +24,10 @@ def index():
 	posts = pagination.items
 	return render_template('main/index.html', posts=posts, pagination=pagination)
 
+@main.route('/about', methods=['GET'])
+def about():
+	return render_template('main/about.html')
+
 
 @main.route('/post/<int:id>', methods=['GET', 'POST'])
 def post(id):

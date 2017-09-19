@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<h1>About Me </h1>
+<hr />
+<div>
+	<div class="image-cropper">
+		<img src="{{ url_for('static', filename='images/icon.jpg') }}"> 
+	</div>
+
+	<p> Hi there, my name is Tom, and I live here in the sunny city of Dublin, Ireland. I moved here around June 2016 from another county in Ireland. I'm a software engineer and link most of the software engineers I know my hobbies all centre around tech. I'm an avid gamer and also have an interest in music.
+	</p>
+
+	<p> The blog you're reading was created using Flask following the great tutorials from <a href="https://twitter.com/miguelgrinberg">@Miguel Grinberg</a>. I've always wanted to give this sort of thing a go and when looking for a new language to learn, I stumbled across Flask.
+	</p>
+
+	<p> The topics I'll mostly be blogging about fall into two categories: projects I'm working on or things I find interesting. I currently intend to keep it mostly tech related but who knows.<br/></p>
+
+	<p>Thanks for stopping by,<br/>
+
+	Tom.
+	</p>
+
+	<div class="social">
+  		<a class="fa fa-github" title="" target="_blank" href="https://github.com/trno1an"></a>
+  		<a class="fa fa-linkedin" title="" target="_blank" href="https://www.linkedin.com/in/tom-nolan-801914a7/"></a>
+  		<a class="fa fa-twitter" title="" target="_blank" href="https://twitter.com/trno1an"></a>
+	</div>
+	<br/>
+</div>
+
+{% endblock %}
