@@ -1,1 +1,2 @@
 redis-stable/* linguist-vendored
+python.js linguist-vendored=false
