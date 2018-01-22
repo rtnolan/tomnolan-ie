@@ -18,6 +18,7 @@ pagedown = PageDown()
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
 login_manager.login_view = 'authgwy.login'
+login_manager.login_message = 'Please login to access this page.'
 
 
 # Initialize Celery

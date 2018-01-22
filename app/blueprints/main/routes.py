@@ -59,10 +59,10 @@ def add_post():
 @admin_required
 def edit_post(id):
 	post = Post.query.get_or_404(id)
+	db_categories = Category.query
+	choices = [(str(c.id), c.name) for c in db_categories]
 	if current_user != post.author:
 		abort(403)
-	db_categories = Category.query
-	choices = [(c.name, c.name) for c in db_categories]
 	form = PostForm(choices)
 	if current_user.is_authenticated and current_user.confirmed \
 	and form.validate_on_submit():
@@ -70,13 +70,15 @@ def edit_post(id):
 		post.body = form.body.data
 		post.categories = []
 		for category_str in request.form.getlist('categories'):
-			category = Category.query.filter_by(name=category_str).first()
+			category = Category.query.filter_by(id=category_str).first()
 			post.categories.append(category)
 			db.session.add(post)
 		flash('Post has been updated.')
 		return redirect(url_for('main.post', id=id))
 	form.title.data = post.title
 	form.body.data = post.body
+	form.categories.default = [ (str(category.id)) for category in post.categories ]
+	form.categories.process(request.form)
 	return render_template('main/edit_post.html', form=form, id=id)
 
 @main.route('/delete-post/<int:id>', methods=['GET', 'POST'])

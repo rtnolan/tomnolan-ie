@@ -7,12 +7,12 @@ from wtforms import ValidationError
 from flask_pagedown.fields import PageDownField
 from app.models import User, Category
 from app.extensions import db
-from flask import current_app
+from flask import current_app, flash
 
 
 class PostForm(FlaskForm):
 	title = StringField("Title", validators=[Required()])
-	categories = SelectMultipleField("Categories:", choices="")
+	categories = SelectMultipleField("Categories:")
 	body = PageDownField("What's on your mind?", validators=[Required()])
 	#category = QuerySelectField(u'Category', query_factory=lambda: Category.query, get_label='name'
 	submit = SubmitField('Submit')
