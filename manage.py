@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import os
-from app.app import create_app
+from app import create_app
 from app.extensions import db
 from app.models import User, Post, Category, Role
 from flask_script import Manager, Shell

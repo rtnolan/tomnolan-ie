@@ -2,7 +2,7 @@ from flask import Blueprint
 
 main = Blueprint('main', __name__, template_folder='templates')
 
-from . import views, errors
+from . import routes, errors
 from ...models import Permission
 
 @main.app_context_processor

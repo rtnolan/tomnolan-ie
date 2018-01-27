@@ -2,11 +2,15 @@
 <h1>{{ post.title }}</h1>
 <div>Posted By <span class="label label-success">{{post.author.username}}</span>&nbsp;Categories: {% for cat in post.categories %}<span class="label label-info">{{ cat.name }}</span>&nbsp;{% endfor %} <p style="float:right"><span class="glyphicon glyphicon-time float-right"></span> Posted {{ moment(post.timestamp).format("MMMM Do YYYY")}}</p></div>
 <hr>
-<div>
+<div class='post'>
 	{% if post.body_html %}
-        {{ post.body_html | safe }}
+		<div class='post_body'>
+        	{{ post.body_html | safe }}
+        </div>
     {% else %}
-        {{ post.body }}
+    	<div class='post_body'>
+        	{{ post.body }}
+        </div>
 	{% endif %}
 </div>
 <a href="{{ url_for('main.post', id=post.id) }}"> Read More...</a>

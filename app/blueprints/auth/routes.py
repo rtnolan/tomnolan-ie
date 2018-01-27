@@ -5,12 +5,12 @@ from app.extensions import db
 from app.models import User
 from flask_mail import Mail, Message
 from .tasks import send_email
-from . import authgwy
+from . import auth
 
 #authgwy = Blueprint('authgwy', __name__, template_folder='templates')
 
 
-@authgwy.before_app_request
+@auth.before_app_request
 def before_request():
 	"""
 	Executes before a request is processed.
@@ -25,9 +25,9 @@ def before_request():
 			and not current_user.confirmed \
 			and request.endpoint and request.endpoint[:8] != 'authgwy.' \
 			and request.endpoint != 'static':
-		return redirect(url_for('authgwy.unconfirmed'))
+		return redirect(url_for('auth.unconfirmed'))
 
-@authgwy.route('/register', methods=['GET', 'POST'])
+@auth.route('/register', methods=['GET', 'POST'])
 def register():
 	# route used for registering new Users. Validates register on submit, else returns the template for registration.
 	form = RegistrationForm()
@@ -35,20 +35,20 @@ def register():
 		user = User(email=form.email.data, username=form.username.data, password=form.password.data)
 		token = user.generate_confirmation_token()
 		send_email(user.email, 'Confirm Your Account',
-                   'authgwy/email/confirm', user=user, token=token)
+                   'auth/email/confirm', user=user, token=token)
 		db.session.add(user)
 		db.session.commit()
 		flash('A confirmation email has been sent to you by email.')
 		return redirect(url_for('authgwy.login'))
-	return render_template('authgwy/register.html', form=form)
+	return render_template('auth/register.html', form=form)
 
-@authgwy.route('/unconfirmed')
+@auth.route('/unconfirmed')
 def unconfirmed():
     if current_user.is_anonymous or current_user.confirmed:
         return redirect(url_for('main.index'))
-    return render_template('authgwy/unconfirmed.html')
+    return render_template('auth/unconfirmed.html')
 
-@authgwy.route('/login', methods=['GET', 'POST'])
+@auth.route('/login', methods=['GET', 'POST'])
 def login():
 	# route used for logging in. Validates on submit and uses flask_logins 'login_user', else returns template for login.
 	form = LoginForm()
@@ -58,17 +58,17 @@ def login():
 			login_user(user, form.remember_me.data)
 			return redirect(request.args.get('next') or url_for('main.index'))
 		flash('Invalid email or password.')
-	return render_template('authgwy/login.html', form=form)
+	return render_template('auth/login.html', form=form)
 
 
-@authgwy.route('/logout')
+@auth.route('/logout')
 @login_required
 def logout():
 	# logout user.
     logout_user()
     return redirect(url_for('main.index'))
 
-@authgwy.route('/confirm/<token>')
+@auth.route('/confirm/<token>')
 @login_required
 def confirm(token):
 	if current_user.confirmed:
@@ -79,7 +79,7 @@ def confirm(token):
 		flash('The confirmation link has expired or is invalid.')
 	return redirect(url_for('main.index'))
 
-@authgwy.route('/confirm')
+@auth.route('/confirm')
 @login_required
 def resend_confirmation():
 	token = current_user.generate_confirmation_token()
@@ -88,7 +88,7 @@ def resend_confirmation():
 	flash('A new confirmation email has been sent to you!')
 	return redirect(url_for('main.index'))
 
-@authgwy.route('/reset', methods=['GET', 'POST'])
+@auth.route('/reset', methods=['GET', 'POST'])
 def password_reset_request():
 	if not current_user.is_anonymous:
 		return redirect(url_for('main.index'))
@@ -101,9 +101,9 @@ def password_reset_request():
                    'authgwy/email/reset_password', user=user, token=token, next=request.args.get('next'))
 		flash('An email has been sent to you with instructions on how to reset your password!')
 		return redirect(url_for('authgwy.login'))
-	return render_template('authgwy/reset_password.html', form=form)
+	return render_template('auth/reset_password.html', form=form)
 
-@authgwy.route('/reset/<token>', methods=['GET', 'POST'])
+@auth.route('/reset/<token>', methods=['GET', 'POST'])
 def password_reset(token):
 	if not current_user.is_anonymous:
 		return redirect(url_for('main.index'))
@@ -117,9 +117,9 @@ def password_reset(token):
 			return redirect(url_for('authgwy.login'))
 		else:
 			return redirect(url_for('main.index'))
-	return render_template('authgwy/reset_password.html', form=form)
+	return render_template('auth/reset_password.html', form=form)
 
-@authgwy.route('/change-password', methods=['GET', 'POST'])
+@auth.route('/change-password', methods=['GET', 'POST'])
 @login_required
 def change_password():
 	form = ChangePasswordForm()
@@ -131,7 +131,7 @@ def change_password():
 			return redirect(url_for('main.index'))
 		else:
 			flash('Invalid Password.')
-	return render_template("authgwy/change_password.html", form=form)
+	return render_template("auth/change_password.html", form=form)
 
 
 
