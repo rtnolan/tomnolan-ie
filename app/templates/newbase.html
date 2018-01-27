@@ -1,0 +1,44 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}tomnolan.ie{% endblock %}
+
+{% block head %}
+{{ super() }}
+
+<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block navbar %}
+<div class="header-section">
+    <div class="w-container">
+        <a href="index.html" class="blog-home-link w-inline-block">
+            <h1 class="blog-name">tomnolan.ie</h1>
+        </a>
+        <div class="navigation-bar">
+            <a href="index.html" class="nav-link">blog</a>
+            <a href="about.html" class="nav-link">about</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="section">
+    {% block posts %}
+    {% endblock %}
+</div>
+<div class="footer">
+    <div class="w-container">
+      <div><a href="#" class="social-icon-link w-inline-block"><i class="fa fa-github-square fa-3x" aria-hidden="true"></i></a></div>
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block scripts %}
+{{ super() }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+{{ moment.include_moment() }}
+{% endblock %}

@@ -171,7 +171,7 @@ class Post(db.Model):
 							lazy='dynamic')
 	@staticmethod
 	def on_changed_body(target, value, oldvalue, initiator):
-		allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code','em', 'i', 'li', 'ol', 'pre', 'strong', 'ul', 'h1', 'h2', 'h3', 'p']
+		allowed_tags = ['a', 'abbr', 'acronym', 'b', 'blockquote', 'code','em', 'i', 'li', 'ol', 'pre', 'strong', 'ul', 'h1', 'h2', 'h3', 'p','br','u']
 		print("Target: " + str(target))
 		print("Body_HTML: " + str(target.body_html))
 		print("Value: " + str(value))

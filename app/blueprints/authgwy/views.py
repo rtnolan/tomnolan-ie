@@ -97,7 +97,7 @@ def password_reset_request():
 		user = User.query.filter_by(email=form.email.data).first()
 		if user:
 			token = user.generate_reset_token()
-			send_async_email(user.email, 'Reset Your Password',
+			send_email(user.email, 'Reset Your Password',
                    'authgwy/email/reset_password', user=user, token=token, next=request.args.get('next'))
 		flash('An email has been sent to you with instructions on how to reset your password!')
 		return redirect(url_for('authgwy.login'))

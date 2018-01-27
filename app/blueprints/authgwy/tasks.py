@@ -22,6 +22,7 @@ def send_async_email(app, msg):
 
 def send_email(to, subject, template, **kwargs):
     app = current_app._get_current_object()
+    print("MAIL_USERNAME in email: " + app.config['MAIL_USERNAME'])
     msg = Message(app.config['BLOG_PREFIX'] + ' ' + subject,
                   sender=app.config['MAIL_USERNAME'], recipients=[to])
     msg.body = render_template(template + '.txt', **kwargs)

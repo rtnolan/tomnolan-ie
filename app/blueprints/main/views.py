@@ -49,7 +49,6 @@ def add_post():
 			category = Category.query.filter_by(name=category_str).first()
 			post.categories.append(category)
 			db.session.add(post)
-		print(request.form.getlist('categories'))
 		return redirect(url_for('main.index'))
 	return render_template('main/add_post.html', form=form)
 
