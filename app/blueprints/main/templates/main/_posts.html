@@ -1,18 +1,19 @@
 {% for post in posts %}
-<h1>{{ post.title }}</h1>
-<div>Posted By <span class="label label-success">{{post.author.username}}</span>&nbsp;Categories: {% for cat in post.categories %}<span class="label label-info">{{ cat.name }}</span>&nbsp;{% endfor %} <p style="float:right"><span class="glyphicon glyphicon-time float-right"></span> Posted {{ moment(post.timestamp).format("MMMM Do YYYY")}}</p></div>
-<hr>
-<div class='post'>
-	{% if post.body_html %}
-		<div class='post_body'>
-        	{{ post.body_html | safe }}
-        </div>
-    {% else %}
-    	<div class='post_body'>
-        	{{ post.body }}
-        </div>
+<div class="blog-post">
+	{% if post.image_url %}
+	<div style="height: 500px; width: 100%">
+		<img src="{{ url_for('static', filename='' + post.image_url) }}">
+	</div>
 	{% endif %}
+	<img class="main-image" src="">
+	<div class="heading-wrapper">
+		<h1 class="blog-headline">{{ post.title }}</h1>
+		<div class="byline-wrapper">
+			<div class="byline-text">{{ moment(post.timestamp).format("MMMM Do YYYY")}}</div>
+			<div class="byline-text">IN </div>{% for cat in post.categories %}<span>{{ cat.name }}</span>&nbsp;{% endfor %}
+		</div>
+	</div>
+	<p class="blog-content">{% if post.preview_html %}{{ post.preview_html | safe }}{% else %}{{ post.preview}}{% endif %}</p>
+	<a class="link-to-page" href="{{ url_for('main.post', id=post.id) }}">Read More</a>
 </div>
-<a href="{{ url_for('main.post', id=post.id) }}"> Read More...</a>
-<hr>
 {% endfor %}

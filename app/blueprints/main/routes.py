@@ -21,12 +21,17 @@ def index():
 	page = request.args.get('page', 1, type=int)
 	pagination = Post.query.order_by(Post.timestamp.desc()).paginate(
 		page, per_page=current_app.config['POSTS_PER_PAGE'], error_out=False)
+	post_count = Post.query.all()
 	posts = pagination.items
-	return render_template('main/index.html', posts=posts, pagination=pagination)
+	return render_template('main/index.html', posts=posts, pagination=pagination, post_count=post_count)
 
 @main.route('/about', methods=['GET'])
 def about():
 	return render_template('main/about.html')
+
+@main.route('/portfoilio', methods=['GET'])
+def portfolio():
+	return render_template('main/index.html')
 
 
 @main.route('/post/<int:id>', methods=['GET', 'POST'])
@@ -44,7 +49,11 @@ def add_post():
 	form = PostForm(choices)
 	if current_user.is_authenticated and current_user.confirmed \
 	and form.validate_on_submit():
-		post = Post(title=form.title.data, body=form.body.data, author=current_user._get_current_object())
+		post = Post(title=form.title.data, \
+					body=form.body.data,  \
+					author=current_user._get_current_object(), \
+					preview=form.preview.data,\
+					image_url=form.image_url.data)
 		for category_str in request.form.getlist('categories'):
 			category = Category.query.filter_by(name=category_str).first()
 			post.categories.append(category)
@@ -67,6 +76,8 @@ def edit_post(id):
 	and form.validate_on_submit():
 		post.title = form.title.data
 		post.body = form.body.data
+		post.perview = form.perview.data
+		post.image_url = form.image_url.data
 		post.categories = []
 		for category_str in request.form.getlist('categories'):
 			category = Category.query.filter_by(id=category_str).first()
@@ -78,6 +89,8 @@ def edit_post(id):
 	form.body.data = post.body
 	form.categories.default = [ (str(category.id)) for category in post.categories ]
 	form.categories.process(request.form)
+	form.preview.data = post.preview
+	form.image_url.data = post.image_url
 	return render_template('main/edit_post.html', form=form, id=id)
 
 @main.route('/delete-post/<int:id>', methods=['GET', 'POST'])

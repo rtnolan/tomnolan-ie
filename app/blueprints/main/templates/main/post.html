@@ -2,19 +2,25 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block page_content %}
 
-<h1>{{ post.title }}</h1>
-<div>{% if current_user.is_administrator() %}<a href="{{url_for('main.edit_post', id=post.id)}}"><span class="label label-danger">Edit</span></a>{% endif %}&nbsp;Posted By <span class="label label-success">{{post.author.username}}</span>&nbsp;Categories: {% for cat in post.categories %}<span class="label label-info">{{ cat.name }}</span>&nbsp;{% endfor %}<p style="float:right"><span class="glyphicon glyphicon-time float-right"></span> Posted {{ moment(post.timestamp).format("MMMM Do YYYY")}}</p></div>
-<hr>
-<div class='post'>
-	{% if post.body_html %}
-		<div class='post_body'>
-        	{{ post.body_html | safe }}
+<div class="blog-post">
+    {% if post.image_url %}
+    <div style="height: 500px; width: 100%">
+        <img src="{{ url_for('static', filename='' + post.image_url) }}">
+    </div>
+    {% endif %}
+    <div class="heading-wrapper">
+        <h1 class="blog-headline">{{ post.title }}</h1>
+        <div class="byline-wrapper">
+            <div class="byline-text">{{ moment(post.timestamp).format("MMMM Do YYYY")}}</div>
+            <div class="byline-text">IN</div>{% for cat in post.categories %}<span>{{ cat.name }}</span>&nbsp;{% endfor %}
         </div>
-    {% else %}
-    	<div class='post_body'>
-        	{{ post.body }}
+        <div class="byline-wrapper">
+            <a class="byline-text link-to-page" href="{{ url_for('main.edit_post', id=post.id) }}" style="display: inline;">Edit</a>
+            &emsp;
+            <a class="byline-text link-to-page" href="{{ url_for('main.delete_post', id=post.id) }}" style="display: inline;">Delete</a>
         </div>
-	{% endif %}
+    </div>
+    <p class="blog-content">{% if post.body_html %}{{ post.body_html | safe }}{% else %}{{ post.body}}{% endif %}</p>
 </div>
 {% endblock %}
 

@@ -1,49 +1,15 @@
-{% extends "newbase.html" %}
+{% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% import "main/_macros.html" as macros %}
 {% block page_content %}
 
-<!-- {% include 'main/_posts.html' %}
+{% include 'main/_posts.html' %}
 
-{% if posts %}
-<div class="pagination">
-{{ macros.pagination_widget(pagination, '.index') }}
+{% if post_count|length > 5 %}
+<div class="pagination" style="float: right;">
+	{{ macros.pagination_widget(pagination, '.index') }}
 </div>
-{% endif %} -->
-{% block posts %}
-{% for post in posts %}
-<style type="text/css">
-img {
-	position: relative;
-	top: 50%;
-	left: 50%;
-	transform: translateX(-50%) translateY(-50%);
-	max-width: 100%;
-	max-height: 100%;
-}
-</style>
-<div class="w-container">
-	<div class="content-wrapper">
-		<div class="blog-post">
-			<div style="height: 500px; width: 100%">
-				<img src="{{ url_for('static', filename='images/icon.jpg') }}">
-			</div>
-			<img class="main-image" src="">
-			<div class="heading-wrapper">
-				<h1 class="blog-headline">{{ post.title }}</h1>
-				<div class="byline-wrapper">
-					<div class="byline-text">{{ moment(post.timestamp).format("MMMM Do YYYY")}}</div>
-					<div class="byline-text">IN</div>{% for cat in post.categories %}<span>{{ cat.name }}</span>{% endfor %}
-				</div>
-			</div>
-			<p class="blog-content">{% if post.body_html %}{{ post.body_html | safe }}{% else %}{{ post.body }}{% endif %}</p>
-			<a class="link-to-page">Read More</a>
-		</div>
-	</div>
-</div>
-{% endfor %}
-
-{% endblock %}
+{% endif %}
 
 {% endblock %}
 

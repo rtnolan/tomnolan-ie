@@ -13,8 +13,9 @@ from flask import current_app, flash
 class PostForm(FlaskForm):
 	title = StringField("Title", validators=[Required()])
 	categories = SelectMultipleField("Categories:")
+	image_url = StringField("Image URL")
+	preview = PageDownField("Preview of post", validators=[Required()])
 	body = PageDownField("What's on your mind?", validators=[Required()])
-	#category = QuerySelectField(u'Category', query_factory=lambda: Category.query, get_label='name'
 	submit = SubmitField('Submit')
 
 	def __init__(self, choices):
