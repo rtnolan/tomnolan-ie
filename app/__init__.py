@@ -1,4 +1,4 @@
-import logging
+import logging, os
 from logging.handlers import SMTPHandler, RotatingFileHandler
 from flask import Flask, current_app
 from app.extensions import (
