@@ -33,6 +33,10 @@ def create_app(config_name):
 
 	extensions(app)
 
+	if app.config['SSL_REDIRECT']:
+		from flask_sslify import SSLify
+		sslify = SSLify(app)
+
 	if not app.debug and not app.testing:
 		if app.config['MAIL_SERVER']:
 			auth = None

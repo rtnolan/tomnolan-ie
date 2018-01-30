@@ -6,7 +6,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     SECRET_KEY = os.environ.get('SECRET_KEY')
     WTF_CSRF_ENABLED = True
-    SSL_DISABLE = True
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True
@@ -21,6 +20,7 @@ class Config:
     CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
     POSTS_PER_PAGE = 5
     SLOW_DB_QUERY_TIME=0.5
+    SSL_REDIRECT = False
 
     @staticmethod
     def init_app(app):
@@ -60,7 +60,7 @@ class ProductionConfig(Config):
 
 
 class HerokuConfig(ProductionConfig):
-    SSL_DISABLE = bool(os.environ.get('SSL_DISABLE'))
+    SSL_REDIRECT = True if os.environ.get('DYNO') else False
 
     @classmethod
     def init_app(cls, app):
