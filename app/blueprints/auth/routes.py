@@ -39,7 +39,7 @@ def register():
 		db.session.add(user)
 		db.session.commit()
 		flash('A confirmation email has been sent to you by email.')
-		return redirect(url_for('authgwy.login'))
+		return redirect(url_for('auth.login'))
 	return render_template('auth/register.html', form=form)
 
 @auth.route('/unconfirmed')
@@ -84,7 +84,7 @@ def confirm(token):
 def resend_confirmation():
 	token = current_user.generate_confirmation_token()
 	send_email(current_user.email, 'Confirm Your Account',
-                   'authgwy/email/confirm', user=current_user, token=token)
+                   'auth/email/confirm', user=current_user, token=token)
 	flash('A new confirmation email has been sent to you!')
 	return redirect(url_for('main.index'))
 
@@ -98,9 +98,9 @@ def password_reset_request():
 		if user:
 			token = user.generate_reset_token()
 			send_email(user.email, 'Reset Your Password',
-                   'authgwy/email/reset_password', user=user, token=token, next=request.args.get('next'))
+                   'auth/email/reset_password', user=user, token=token, next=request.args.get('next'))
 		flash('An email has been sent to you with instructions on how to reset your password!')
-		return redirect(url_for('authgwy.login'))
+		return redirect(url_for('auth.login'))
 	return render_template('auth/reset_password.html', form=form)
 
 @auth.route('/reset/<token>', methods=['GET', 'POST'])
@@ -114,7 +114,7 @@ def password_reset(token):
 			return redirect(url_for('main.index'))
 		if user.reset_password(token, form.password.data):
 			flash('Your password has been updated!')
-			return redirect(url_for('authgwy.login'))
+			return redirect(url_for('auth.login'))
 		else:
 			return redirect(url_for('main.index'))
 	return render_template('auth/reset_password.html', form=form)
