@@ -23,7 +23,7 @@ def before_request():
 	"""
 	if current_user.is_authenticated \
 			and not current_user.confirmed \
-			and request.endpoint and request.endpoint[:8] != 'authgwy.' \
+			and request.endpoint and request.endpoint[:8] != 'auth.' \
 			and request.endpoint != 'static':
 		return redirect(url_for('auth.unconfirmed'))
 
