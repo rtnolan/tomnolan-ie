@@ -29,8 +29,8 @@ nav {
     overflow: hidden;
     border-radius: 50%;
     float: left;
-    margin: 0 30px 200px 0;
-    clear: right;
+    margin: 0 30px 250px 0;
+    clear: right;c
 }
 
 img {
@@ -110,6 +110,10 @@ body {
   color: rgba(0, 0, 0, .74);
   font-size: 16px;
   line-height: 20px;
+}
+
+li {
+  font-size: 14px;
 }
 
 h1 {

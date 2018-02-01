@@ -25,6 +25,7 @@ def before_request():
 			and not current_user.confirmed \
 			and request.endpoint and request.endpoint[:5] != 'auth.' \
 			and request.endpoint != 'static':
+		print("endpoint is: " + request.endpoint)
 		return redirect(url_for('auth.unconfirmed'))
 
 @auth.route('/register', methods=['GET', 'POST'])

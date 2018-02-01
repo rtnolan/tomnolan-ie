@@ -76,7 +76,7 @@ def edit_post(id):
 	and form.validate_on_submit():
 		post.title = form.title.data
 		post.body = form.body.data
-		post.perview = form.perview.data
+		post.preview = form.preview.data
 		post.image_url = form.image_url.data
 		post.categories = []
 		for category_str in request.form.getlist('categories'):

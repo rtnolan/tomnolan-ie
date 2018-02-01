@@ -30,6 +30,12 @@
 
 {% block content %}
 <div class="section">
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
     <div class="w-container">
         <div class="content-wrapper">
             {% block page_content %}
