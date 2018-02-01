@@ -1,3 +1,0 @@
-#define REDIS_GIT_SHA1 "90a00e41"
-#define REDIS_GIT_DIRTY "     221"
-#define REDIS_BUILD_ID "tnolan-01-1499768014"
