@@ -15,11 +15,13 @@
             <div class="byline-text">{{ moment(post.timestamp).format("MMMM Do YYYY")}}</div>
             <div class="byline-text">IN</div>{% for cat in post.categories %}<span>{{ cat.name }}</span>&nbsp;{% endfor %}
         </div>
+        {% if current_user.is_authenticated %}
         <div class="byline-wrapper">
             <a class="byline-text link-to-page" href="{{ url_for('main.edit_post', id=post.id) }}" style="display: inline;">Edit</a>
             &emsp;
             <a class="byline-text link-to-page" href="{{ url_for('main.delete_post', id=post.id) }}" style="display: inline;">Delete</a>
         </div>
+        {% endif %}
     </div>
     <p class="blog-content">{% if post.body_html %}{{ post.body_html | safe }}{% else %}{{ post.body}}{% endif %}</p>
 </div>
