@@ -52,7 +52,6 @@ def add_post():
 		post = Post(title=form.title.data, \
 					body=form.body.data,  \
 					author=current_user._get_current_object(), \
-					preview=form.preview.data,\
 					image_url=form.image_url.data)
 		for category_str in request.form.getlist('categories'):
 			category = Category.query.filter_by(name=category_str).first()
@@ -76,7 +75,6 @@ def edit_post(id):
 	and form.validate_on_submit():
 		post.title = form.title.data
 		post.body = form.body.data
-		post.preview = form.preview.data
 		post.image_url = form.image_url.data
 		post.categories = []
 		for category_str in request.form.getlist('categories'):
@@ -89,7 +87,6 @@ def edit_post(id):
 	form.body.data = post.body
 	form.categories.default = [ (str(category.id)) for category in post.categories ]
 	form.categories.process(request.form)
-	form.preview.data = post.preview
 	form.image_url.data = post.image_url
 	return render_template('main/edit_post.html', form=form, id=id)
 

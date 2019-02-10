@@ -17,6 +17,12 @@ nav {
     position: relative;
 }
 
+.table {
+  border-radius: 5px;
+  width: 50%;
+  margin: 0px auto;
+  float: none;
+}
 
 .inline-header h1 {
 	display:inline;
@@ -30,7 +36,7 @@ nav {
     border-radius: 50%;
     float: left;
     margin: 0 30px 250px 0;
-    clear: right;c
+    clear: right;
 }
 
 img {

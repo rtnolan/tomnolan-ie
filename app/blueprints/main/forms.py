@@ -14,7 +14,6 @@ class PostForm(FlaskForm):
 	title = StringField("Title", validators=[Required()])
 	categories = SelectMultipleField("Categories:")
 	image_url = StringField("Image URL")
-	preview = PageDownField("Preview of post", validators=[Required()])
 	body = PageDownField("What's on your mind?", validators=[Required()])
 	submit = SubmitField('Submit')
 
