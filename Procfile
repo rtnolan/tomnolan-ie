@@ -1,1 +1,1 @@
-web: gunicorn manage:app
+web: python manage db upgrade web: gunicorn manage:app
